@@ -6,8 +6,8 @@ class Month {
 
     public $days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
     private $months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
-    private $month;
-    private $year;
+    public $month;
+    public $year;
     /**
      * Month contructor
      * @param int $month le mois compris entre 1 et 12
@@ -54,6 +54,11 @@ class Month {
     {
        return $this->months[$this->month - 1]. ' '. $this->year;
     }
+
+    /**
+     * Renvoie le nombre de semaine dans le mois
+     * @return int
+     */
     public function getWeeks(): int
     {
         $start = $this->getStartingDay();
@@ -64,5 +69,46 @@ class Month {
             $weeks = intval($end->format('W'));
         }
         return $weeks;
+    }
+    /**
+     * Est ce que le jour est dans le mois en cours
+     * @param\DateTime $ date
+     * @return bool
+     */
+    public function withinMonth(\DateTime $date):bool
+    {
+        return $this->getStartingDay()->format('Y-m') == $date->format('Y-m');
+    }
+
+    /**
+     * Renvoie le mois suivant
+     * @return Month
+     */
+    public function nextMonth(): Month
+    {
+        $month= $this->month +1;
+        $year = $this->year;
+        if($month >12)
+        {
+            $month = 1;
+            $year += 1;
+        }
+        return new Month($month, $year);
+    }
+
+      /**
+     * Renvoie le mois précédent
+     * @return Month 
+     */
+    public function previousMonth(): Month
+    {
+        $month= $this->month -1;
+        $year = $this->year;
+        if($month <1)
+        {
+            $month = 12;
+            $year -= 1;
+        }
+        return new Month($month, $year);
     }
 }
