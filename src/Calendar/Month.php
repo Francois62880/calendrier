@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Date;
+namespace Calendar;
 
 class Month {
 
