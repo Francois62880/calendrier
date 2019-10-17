@@ -1,10 +1,14 @@
 <?php 
+require '../src/bootstrap.php';
 
-require '../src/Calendar/Month.php';
-require '../src/Calendar/Events.php';
-$events = new Calendar\Events();
+use Calendar\{
+    Events,
+    Month
+};
+$pdo = get_pdo();
+$events = new Events($pdo);
 try {
-$month = new Calendar\Month($_GET['month'] ?? null, $_GET['year'] ?? null); 
+$month = new Month($_GET['month'] ?? null, $_GET['year'] ?? null); 
 
 }catch (\Exception $e){
     $month = new App\Date\Month();
@@ -40,7 +44,7 @@ require '../views/header.php';
                 </div>
                 <?php foreach($eventsForDay as $event): ?>
                 <div class="calendar__event">
-                    <?= (new DateTime($event['start']))->format('H:i') ?> - <a href="/event.php?id=<?= $event['id']; ?>"><?= $event['name']; ?></a>
+                    <?= (new DateTime($event['start']))->format('H:i') ?> - <a href="/event.php?id=<?= $event['id']; ?>"><?= h($event['name']); ?></a>
                 </div>
                 <?php endforeach; ?>
             </td>

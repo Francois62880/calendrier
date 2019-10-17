@@ -1,0 +1,15 @@
+{
+    "name": "francois/calendrier",
+    "authors": [
+        {
+            "name": "francois",
+            "email": "francois.cousin62880@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Calendar\\" : "src/Calendar"
+        }
+    },
+    "require": {}
+}
