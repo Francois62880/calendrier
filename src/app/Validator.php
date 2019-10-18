@@ -7,6 +7,11 @@ class Validator{
     private $data;
     protected $errors= [];
 
+    public function __construct(array $data= [])
+    {
+        $this->data = $data;
+    }
+
      /**
      * @param array $date
      * @return array/bool
@@ -15,14 +20,16 @@ class Validator{
     {
         $this->errors = [];
         $this->data = $data;
+        return $this->errors;
     }
-    public function validate(string $field, string $method, ...$parameters)
+    public function validate(string $field, string $method, ...$parameters):bool
     {
         if(!isset($this->data[$field]))
         {
             $this->errors[$field] = "Le champs $field n'est pas rempli";
+            return false;
         }else{
-        call_user_func([$this, $method],$field, ...$parameters);
+        return call_user_func([$this, $method],$field, ...$parameters);
         }
     }
 

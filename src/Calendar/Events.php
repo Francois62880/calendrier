@@ -18,7 +18,7 @@ class Events
      */
     public function getEventsBetween(\DateTime $start, \DateTime $end): array
     {
-        $sql = "SELECT * FROM events WHERE start BETWEEN '{$start->format('Y-m-d 00:00:00')}' and '{$end->format('Y-m-d 23:59:59')}'";
+        $sql = "SELECT * FROM events WHERE start BETWEEN '{$start->format('Y-m-d 00:00:00')}' and '{$end->format('Y-m-d 23:59:59')}' ORDER BY start ASC";
         $statement = $this->pdo->query($sql);
         $resultats = $statement->fetchAll();
         return $resultats;
@@ -60,6 +60,21 @@ class Events
         }
         return $result;
     }
+
+    public function hydrate(Event $event, array $data)
+    {
+        $event->setName($data['name']);
+        $event->setDescription($data['description']);
+        $event->setStart(\DateTime::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['start'])->format('Y-m-d H:i:s'));
+        $event->setEnd(\DateTime::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['end'])->format('Y-m-d H:i:s'));
+        return $event;
+    }
+
+     /**
+     * création d'un événement au niveau de la base de données
+     * @param Event $event
+     * @return bool
+     */
     public function create(Event $event):bool
     {
         $statement = $this->pdo->prepare('INSERT INTO events (name, description, start, end) VALUES (?,?,?,?)');
@@ -70,4 +85,22 @@ class Events
             $event->getEnd()->format('Y-m-d H:i:s'),
         ]);
     }
+
+    /**
+     * Met à jour un événement au niveau de la base de données
+     * @param Event $event
+     * @return bool
+     */
+    public function update(Event $event):bool
+    {
+        $statement = $this->pdo->prepare('UPDATE events SET name= ?, description= ?, start= ?, end= ? WHERE id = ?'); 
+        return $statement->execute([
+            $event->getName(),
+            $event->getDescription(),
+            $event->getStart()->format('Y-m-d H:i:s'),
+            $event->getEnd()->format('Y-m-d H:i:s'),
+            $event->getId()
+        ]);
+    }
+
 }
