@@ -21,6 +21,14 @@ $events = $events->getEventsBetweenByDay($start,$end);
 require '../views/header.php';
 ?>
 <div class="div calendar">
+    <div class="container">
+        <?php if(isset($_GET['success'])): ?>
+        <div class="alert alert-success">
+            L'événement a bien été enregistré !
+        </div>
+        <?php endif; ?>
+    </div>
+
     <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
         <h1><?= $month->toString(); ?></h1>
         <div>

@@ -14,6 +14,7 @@ class Event
 
     private $end;
 
+
     public function getId(): int
     {
         return $this->id;
@@ -37,5 +38,21 @@ class Event
     public function getEnd(): \DateTime
     {
         return new \DateTime($this->end);
+    }
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+    }
+    public function setStart(string $start)
+    {
+        $this->start = $start;
+    }
+    public function setEnd(string $end)
+    {
+        $this->end = $end;
     }
 }
