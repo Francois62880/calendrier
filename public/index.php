@@ -20,6 +20,7 @@ $end = (clone $start)->modify('+' . (6 + 7 * ($week - 1)) . ' days');
 $events = $events->getEventsBetweenByDay($start,$end);
 require '../views/header.php';
 ?>
+<div class="div calendar">
     <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
         <h1><?= $month->toString(); ?></h1>
         <div>
@@ -44,7 +45,8 @@ require '../views/header.php';
                 </div>
                 <?php foreach($eventsForDay as $event): ?>
                 <div class="calendar__event">
-                    <?= (new DateTime($event['start']))->format('H:i') ?> - <a href="/event.php?id=<?= $event['id']; ?>"><?= h($event['name']); ?></a>
+                    <?= (new DateTime($event['start']))->format('H:i') ?> - <a
+                        href="/event.php?id=<?= $event['id']; ?>"><?= h($event['name']); ?></a>
                 </div>
                 <?php endforeach; ?>
             </td>
@@ -53,6 +55,9 @@ require '../views/header.php';
 
         <?php endfor; ?>
     </table>
+
+    <a href="/add.php" class="calendar__btn">+</a>
+</div>
 
 <?php
 require '../views/footer.php';
