@@ -41,6 +41,9 @@ render('header', ['title'=> $event->getName()]);
         <div class="form-group">
             <button class="btn btn-primary">Modifier l'événement</button>
         </div>
+        <div class="form-group">
+            <a href="supprimer.php?numevent=<?= $event['id'] ?>"><button class="btn btn-primary">Supprimer l'événement</button></a>
+        </div>
     </form>
 </div>
 <?php

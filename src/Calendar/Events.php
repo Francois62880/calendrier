@@ -61,6 +61,11 @@ class Events
         return $result;
     }
 
+     /**
+     * @param Event $event
+     * @param array $data
+     * @return Event
+     */
     public function hydrate(Event $event, array $data)
     {
         $event->setName($data['name']);
@@ -103,4 +108,13 @@ class Events
         ]);
     }
 
+    /**
+     * TODO: supprime un événement
+     * @param Event $event
+     * @return bool
+     */
+    public function delete(Event $event):bool
+    {
+        $statement = $this->pdo->prepare('DELETE FROM events WHERE id= ?');
+    }
 }
