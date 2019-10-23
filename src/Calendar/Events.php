@@ -113,8 +113,11 @@ class Events
      * @param Event $event
      * @return bool
      */
-    public function delete(Event $event):bool
+    public function delete():bool
     {
-        $statement = $this->pdo->prepare('DELETE FROM events WHERE id= ?');
+        $statement = $this->pdo->prepare('DELETE FROM events WHERE id= :id');
+        $statement->bindValue(':id', $_GET['id'] );
+        return $statement->execute();
+        header('Location:index.php');
     }
 }

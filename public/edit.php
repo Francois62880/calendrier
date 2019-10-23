@@ -31,6 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 }
+if(isset($_GET['id']))
+    {
+        $events->delete();
+        header('location: /index');
+        exit();
+    }
 
 render('header', ['title'=> $event->getName()]);
 ?>
@@ -42,7 +48,7 @@ render('header', ['title'=> $event->getName()]);
             <button class="btn btn-primary">Modifier l'événement</button>
         </div>
         <div class="form-group">
-            <a href="supprimer.php?numevent=<?= $event['id'] ?>"><button class="btn btn-primary">Supprimer l'événement</button></a>
+        <a href="/edit.php?delete?id=<?= $events['id']; ?>"><button class="btn btn-primary">Supprimer l'événement</button></a>
         </div>
     </form>
 </div>
