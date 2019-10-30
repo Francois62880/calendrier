@@ -14,12 +14,13 @@ class Events
      * Récuperer les événements commençant entre deux dates
      * @param \DateTimeInterface $start
      * @param \DateTimeInterface $end
-     * @return array
+     * @return Event[]
      */
     public function getEventsBetween(\DateTimeInterface $start, \DateTimeInterface $end): array
     {
         $sql = "SELECT * FROM events WHERE start BETWEEN '{$start->format('Y-m-d 00:00:00')}' and '{$end->format('Y-m-d 23:59:59')}' ORDER BY start ASC";
         $statement = $this->pdo->query($sql);
+        $statement->setFetchMode(\PDO::FETCH_CLASS, Event::class);
         $resultats = $statement->fetchAll();
         return $resultats;
     }
@@ -34,7 +35,7 @@ class Events
         $events = $this->getEventsBetween($start, $end);
         $days = [];
         foreach ($events as $event) {
-            $date = explode(' ', $event['start'])[0];
+            $date = $event->getStart()->format('Y-m-d');
             if (!isset($days[$date])) {
                 $days[$date] = [$event];
             } else {

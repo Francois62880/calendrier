@@ -64,8 +64,8 @@ require '../views/header.php';
 </div>
 <?php foreach($eventsForDay as $event): ?>
 <div class="calendar__event">
-    <?= (new DateTime($event['start']))->format('H:i') ?> - <a
-        href="/edit.php?id=<?= $event['id']; ?>"><?= h($event['name']); ?></a>
+    <?= $event->getStart()->format('H:i') ?> - <a
+        href="/edit.php?id=<?= $event->getId(); ?>"><?= h($event->getName()); ?></a>
 </div>
 <?php endforeach; ?>
 </td>

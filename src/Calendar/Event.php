@@ -30,14 +30,14 @@ class Event
         return $this->description ?? '';
     }
     
-    public function getStart(): \DateTime
+    public function getStart(): \DateTimeInterface
     {
-        return new \DateTime($this->start);
+        return new \DateTimeImmutable($this->start);
     }
     
-    public function getEnd(): \DateTime
+    public function getEnd(): \DateTimeInterface
     {
-        return new \DateTime($this->end);
+        return new \DateTimeImmutable($this->end);
     }
     public function setName(string $name)
     {
