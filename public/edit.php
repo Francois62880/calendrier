@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if(isset($_GET['action']) == "delete")
 {
     $events->delete();
-    header('location: /index');
+    header('location: /index?success=2');
     exit();
 }
 

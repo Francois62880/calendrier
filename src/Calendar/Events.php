@@ -12,11 +12,11 @@ class Events
     }
     /**
      * Récuperer les événements commençant entre deux dates
-     * @param \DateTime $start
-     * @param \DateTime $end
+     * @param \DateTimeInterface $start
+     * @param \DateTimeInterface $end
      * @return array
      */
-    public function getEventsBetween(\DateTime $start, \DateTime $end): array
+    public function getEventsBetween(\DateTimeInterface $start, \DateTimeInterface $end): array
     {
         $sql = "SELECT * FROM events WHERE start BETWEEN '{$start->format('Y-m-d 00:00:00')}' and '{$end->format('Y-m-d 23:59:59')}' ORDER BY start ASC";
         $statement = $this->pdo->query($sql);
@@ -25,11 +25,11 @@ class Events
     }
     /**
      * Récuperer les événements commençant entre deux dates indé par jour
-     * @param \DateTime $start
-     * @param \DateTime $end
+     * @param \DateTimeInterface $start
+     * @param \DateTimeInterface $end
      * @return array
      */
-    public function getEventsBetweenByDay(\DateTime $start, \DateTime $end): array
+    public function getEventsBetweenByDay(\DateTimeInterface $start, \DateTimeInterface $end): array
     {
         $events = $this->getEventsBetween($start, $end);
         $days = [];
@@ -70,8 +70,8 @@ class Events
     {
         $event->setName($data['name']);
         $event->setDescription($data['description']);
-        $event->setStart(\DateTime::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['start'])->format('Y-m-d H:i:s'));
-        $event->setEnd(\DateTime::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['end'])->format('Y-m-d H:i:s'));
+        $event->setStart(\DateTimeImmutable::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['start'])->format('Y-m-d H:i:s'));
+        $event->setEnd(\DateTimeImmutable::createFromFormat('Y-m-d H:i', $data['date'] . ' ' . $data['end'])->format('Y-m-d H:i:s'));
         return $event;
     }
 
