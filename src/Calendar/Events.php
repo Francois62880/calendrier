@@ -116,10 +116,8 @@ class Events
     public function delete():bool
     {
         $statement = $this->pdo->prepare('DELETE FROM events WHERE id= :id');
-        $statement->execute(array(
+        return $statement->execute(array(
             ':id' => $_GET['id']
         ));
-        return $statement->execute();
-        header('Location:index.php');
     }
 }

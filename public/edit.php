@@ -32,9 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 }
-if(isset($_GET['delete']))
+if(isset($_GET['action']) == "delete")
 {
-    $id = $_GET['delete'];
     $events->delete();
     header('location: /index');
     exit();
@@ -51,8 +50,8 @@ render('header', ['title'=> $event->getName()]);
             <button class="btn btn-primary">Modifier l'événement</button>
         </div>
         <div class="form-group">
-            <a href="/edit.php?delete=<?= $id; ?>"
-                onclick="return window.confirm(`Êtes vous sûr de vouloir supprimer ce commentaire ?!`)"
+        <a href="/edit.php?action=delete&id=<?= $_GET['id']; ?>"
+                onclick="return window.confirm(`Êtes vous sûr de vouloir supprimer cet événement ?!`)"
                 class="btn btn-danger">Supprimer</a>
         </div>
     </form>
